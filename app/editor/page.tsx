@@ -1,20 +1,23 @@
 import Link from 'next/link'
-import { getAllPosts, getSettings } from '@/lib/archive'
+import { getAllPages, getAllPosts, getSettings } from '@/lib/archive'
 import { getEditorSession } from '@/lib/auth'
 import { LoginForm } from '@/app/editor/login-form'
 import { EditorStudio } from '@/app/editor/studio'
 import { ThemeToggle } from '@/components/theme-toggle'
 
+export const dynamic = 'force-dynamic'
+
 export default async function EditorPage() {
   const session = await getEditorSession()
   const useBlob = Boolean(process.env.BLOB_READ_WRITE_TOKEN)
+  const settings = await getSettings()
 
   if (!session) {
     return (
       <main className="editor-page">
         <div className="editor-topbar">
           <Link href="/" className="wordmark">
-            RahilArchive
+            {settings.wordmark}
           </Link>
           <ThemeToggle />
         </div>
@@ -32,17 +35,23 @@ export default async function EditorPage() {
     )
   }
 
-  const [posts, settings] = await Promise.all([getAllPosts(), getSettings()])
+  const [posts, pages] = await Promise.all([getAllPosts(), getAllPages()])
 
   return (
     <main className="editor-page editor-page-wide">
       <div className="editor-topbar">
         <Link href="/" className="wordmark">
-          RahilArchive
+          {settings.wordmark}
         </Link>
         <ThemeToggle />
       </div>
-      <EditorStudio email={session.email} initialPosts={posts} initialSettings={settings} useBlob={useBlob} />
+      <EditorStudio
+        email={session.email}
+        initialPosts={posts}
+        initialPages={pages}
+        initialSettings={settings}
+        useBlob={useBlob}
+      />
     </main>
   )
 }

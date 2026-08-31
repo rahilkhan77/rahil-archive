@@ -1,0 +1,63 @@
+{
+  "settings": {
+    "about_content": "I am Rahil. This is a living archive of the work, questions, and moments I want to keep.",
+    "now_content": "Building thoughtful products, learning in public, and making room for the long view."
+  },
+  "posts": [
+    {
+      "id": "56485f49-343e-49ec-93a4-df5b05297f2f",
+      "slug": "new-era",
+      "title": "New Era",
+      "excerpt": "First Draft From My Side.",
+      "content": "hello, world my name is Rahil khan and i know everyone will know me in mean time, iam web devloper, enterpenuer, social media marketer. thats all for today, its 31-08-2026. i will keep updating my blogs everyday cuase averyone see that one day.",
+      "date": "2026-08-31",
+      "status": "published",
+      "location": null,
+      "mood": null
+    },
+    {
+      "id": "78cb5c79-bf87-4679-b5c6-a9cf7279ed24",
+      "slug": "a-morning-note",
+      "title": "A morning note",
+      "excerpt": "Written from the private editor.",
+      "content": "This is my first real entry from the editor. It should appear on the homepage.",
+      "date": "2026-08-31",
+      "status": "published",
+      "location": null,
+      "mood": null
+    },
+    {
+      "id": "1",
+      "slug": "building-in-public",
+      "title": "Building in Public",
+      "excerpt": "A note on making the work visible while it is still becoming.",
+      "content": "Today I realized that building in public is less about broadcasting a finished idea and more about leaving a trail of honest decisions.\n\nThe archive is useful because it keeps the texture: the wrong turns, the small breakthroughs, and the quiet days between them.",
+      "date": "2026-08-31",
+      "status": "published",
+      "location": null,
+      "mood": null
+    },
+    {
+      "id": "2",
+      "slug": "the-long-view",
+      "title": "The Long View",
+      "excerpt": "Why I am making a place for the ordinary days, too.",
+      "content": "A life is mostly made of ordinary days. I want to remember them with the same care I give to milestones.",
+      "date": "2026-08-30",
+      "status": "published",
+      "location": null,
+      "mood": null
+    },
+    {
+      "id": "3",
+      "slug": "first-page",
+      "title": "The First Page",
+      "excerpt": "Every permanent archive starts as a small decision.",
+      "content": "This is the first page of RahilArchive. A place for projects, lessons, travels, and the things that become clearer when written down.",
+      "date": "2026-08-28",
+      "status": "published",
+      "location": null,
+      "mood": null
+    }
+  ]
+}

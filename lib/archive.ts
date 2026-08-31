@@ -8,7 +8,12 @@ let writeChain = Promise.resolve()
 
 export async function readArchive(): Promise<ArchiveData> {
   const raw = await fs.readFile(filePath, 'utf8')
-  return JSON.parse(raw) as ArchiveData
+  const data = JSON.parse(raw) as ArchiveData
+  data.posts = data.posts.map((post) => ({
+    ...post,
+    media: Array.isArray(post.media) ? post.media : [],
+  }))
+  return data
 }
 
 async function writeArchive(data: ArchiveData) {
@@ -66,6 +71,7 @@ export async function upsertPost(input: {
   content: string
   date: string
   status: Post['status']
+  media?: Post['media']
 }) {
   const archive = await readArchive()
   const title = input.title.trim()
@@ -75,6 +81,7 @@ export async function upsertPost(input: {
 
   const date = input.date || new Date().toISOString().slice(0, 10)
   const excerpt = input.excerpt.trim() || null
+  const media = input.media ?? []
 
   if (input.id) {
     const index = archive.posts.findIndex((post) => post.id === input.id)
@@ -87,6 +94,7 @@ export async function upsertPost(input: {
       date,
       status: input.status,
       slug: uniqueSlug(archive.posts, title, input.id),
+      media,
     }
   } else {
     archive.posts.unshift({
@@ -99,6 +107,7 @@ export async function upsertPost(input: {
       status: input.status,
       location: null,
       mood: null,
+      media,
     })
   }
 

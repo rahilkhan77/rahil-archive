@@ -34,6 +34,7 @@ export async function savePost(input: {
   content: string
   date: string
   status: Post['status']
+  media: Post['media']
 }) {
   await requireEditor()
   try {

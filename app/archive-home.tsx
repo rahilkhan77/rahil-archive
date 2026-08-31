@@ -3,6 +3,8 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { ArrowUpRight, Menu, Search, X } from 'lucide-react'
+import { EntryBody } from '@/components/entry-body'
+import { ThemeToggle } from '@/components/theme-toggle'
 import type { Post, Settings } from '@/lib/types'
 
 function formatDate(value: string) {
@@ -19,7 +21,7 @@ export function ArchiveHome({ posts, settings }: { posts: Post[]; settings: Sett
   const filtered = useMemo(
     () =>
       posts.filter((post) =>
-        `${post.title} ${post.excerpt ?? ''} ${post.content}`.toLowerCase().includes(query.toLowerCase()),
+        `${post.title} ${post.excerpt ?? ''} ${post.content} ${post.media?.map((item) => item.name).join(' ') ?? ''}`.toLowerCase().includes(query.toLowerCase()),
       ),
     [posts, query],
   )
@@ -44,13 +46,16 @@ export function ArchiveHome({ posts, settings }: { posts: Post[]; settings: Sett
             <Search size={15} strokeWidth={1.5} />
           </a>
         </nav>
-        <button
-          className="menu-button"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        >
-          {menuOpen ? <X size={18} /> : <Menu size={18} />}
-        </button>
+        <div className="header-actions">
+          <ThemeToggle />
+          <button
+            className="menu-button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </header>
 
       <section className="hero">
@@ -142,11 +147,7 @@ export function ArchiveHome({ posts, settings }: { posts: Post[]; settings: Sett
             <time>{formatDate(selected.date)}</time>
             <h1>{selected.title}</h1>
             <p className="reading-excerpt">{selected.excerpt}</p>
-            <div className="script-reading">
-              {selected.content.split('\n\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
+            <EntryBody content={selected.content} media={selected.media ?? []} />
           </article>
         </div>
       ) : null}

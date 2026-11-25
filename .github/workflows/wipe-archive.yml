@@ -1,0 +1,74 @@
+name: Wipe leftover archive files
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  wipe:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove leftover archive files
+        run: |
+          set -euo pipefail
+          files=(
+            "app/[slug]/page.tsx"
+            "app/api/upload/route.ts"
+            "app/archive-home.tsx"
+            "app/editor/actions.ts"
+            "app/editor/compose-form.tsx"
+            "app/editor/login-form.tsx"
+            "app/editor/page.tsx"
+            "app/editor/studio.tsx"
+            "components.json"
+            "components/entry-body.tsx"
+            "components/site-chrome.tsx"
+            "components/site-theme.tsx"
+            "components/theme-toggle.tsx"
+            "components/ui/button.tsx"
+            "data/archive.json"
+            "lib/archive.ts"
+            "lib/auth.ts"
+            "lib/defaults.ts"
+            "lib/supabase/client.ts"
+            "lib/supabase/proxy.ts"
+            "lib/supabase/server.ts"
+            "lib/theme.ts"
+            "lib/types.ts"
+            "lib/utils.ts"
+            "middleware.ts"
+            "next-env.d.ts"
+            "next.config.mjs"
+            "postcss.config.mjs"
+            "public/apple-icon.png"
+            "public/icon-dark-32x32.png"
+            "public/icon-light-32x32.png"
+            "public/icon.svg"
+            "public/placeholder-logo.png"
+            "public/placeholder-logo.svg"
+            "public/placeholder-user.jpg"
+            "public/placeholder.jpg"
+            "public/placeholder.svg"
+            "public/uploads/.gitkeep"
+            ".github/workflows/wipe-archive.yml"
+          )
+          removed=0
+          for f in "${files[@]}"; do
+            if [ -e "$f" ]; then
+              rm -f "$f"
+              removed=1
+            fi
+          done
+          find app components data lib public .github -type d -empty -delete 2>/dev/null || true
+          if [ "$removed" = "0" ]; then
+            echo "Nothing to remove"
+            exit 0
+          fi
+          git config user.name "Rahil khan"
+          git config user.email "rxhilkhan@gmail.com"
+          git add -A
+          git commit -m "Remove leftover archive files from the personal hub repo."
+          git push
